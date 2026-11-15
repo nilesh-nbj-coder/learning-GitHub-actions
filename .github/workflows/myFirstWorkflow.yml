@@ -50,6 +50,7 @@ jobs:
             !**/hostname.txt
   job2:
     name: JOB2
+    needs: job1
     runs-on: ubuntu-latest
     steps:  
       - name: checking the current directory
@@ -60,6 +61,22 @@ jobs:
         uses: actions/download-artifact@v8.0.2
         with :
           name: single_file
+      - name: checking the current directory post download
+        run: | 
+          pwd
+          ls -ltr
+ job3:
+    name: JOB3
+    runs-on: ubuntu-latest
+    steps:  
+      - name: checking the current directory
+        run: |
+         pwd
+         ls -ltr
+      - name: Download single file artifact
+        uses: actions/download-artifact@v8.0.2
+        with :
+          name: directory_artifacts
       - name: checking the current directory post download
         run: | 
           pwd
