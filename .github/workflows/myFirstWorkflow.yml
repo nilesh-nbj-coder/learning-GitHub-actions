@@ -82,6 +82,33 @@ jobs:
         run: | 
           pwd
           ls -ltr
-            
+  job4:
+    name: JOB4
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:  
+      - name: creating custom folder for download
+        run: |
+         mkdir -p single_file
+         mkdir -p download_directory
+      - name: downloding single file artifact
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: single_file
+          path: single_file
+      - name: Download directory
+        uses: actions/download-artifact@v8.0.2
+        with :
+          name: directory_artifacts
+          path: download_directory
+      - name: checking the current directory post download
+        run: | 
+          pwd
+          ls -ltr
+          echo "Checking sigle file directory"
+          ls -ltr single_file
+          echp "Checking directory artifact"
+          ls -ltr download_directory
+          
             
   
