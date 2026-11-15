@@ -67,6 +67,7 @@ jobs:
           ls -ltr
   job3:
     name: JOB3
+    needs: job1
     runs-on: ubuntu-latest
     steps:  
       - name: checking the current directory
