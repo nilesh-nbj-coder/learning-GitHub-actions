@@ -65,7 +65,7 @@ jobs:
         run: | 
           pwd
           ls -ltr
- job3:
+  job3:
     name: JOB3
     runs-on: ubuntu-latest
     steps:  
