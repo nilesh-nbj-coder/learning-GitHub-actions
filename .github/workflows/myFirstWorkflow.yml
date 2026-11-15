@@ -17,5 +17,16 @@ jobs:
           pwd
           ls -ltr
           hostname
+      - name: step-3 
+        run : |
+          echo 'pwd' >> myartifact.txt
+          ls -ltr
+          hostname
+      - name: Upload single file
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: single_file
+          path: ./myartifact.txt
+        
       
   
