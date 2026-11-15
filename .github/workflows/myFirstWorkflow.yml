@@ -107,7 +107,7 @@ jobs:
           ls -ltr
           echo "Checking sigle file directory"
           ls -ltr single_file
-          echp "Checking directory artifact"
+          echo "Checking directory artifact"
           ls -ltr download_directory
           
             
