@@ -9,13 +9,13 @@ jobs:
       - name: Step-1
         run: |
           pwd
-          ls-ltr
+          ls -ltr
           hostname
       - name: Step-2-Checkout
         uses: actions/checkout@v7
       - run: |
           pwd
-          ls-ltr
+          ls -ltr
           hostname
       
   
