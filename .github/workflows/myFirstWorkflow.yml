@@ -1,6 +1,16 @@
 name: my-first-workflow
 on: 
   push: 
+    branches:
+      - main
+  pull_request: 
+    branches: 
+      - main
+env:
+    ENV_TYPE: DEV
+    APP_USER: nilesh-nbj-coder
+    APP_PORT: 80
+    
 jobs:
   job1:
     name: JOB1
@@ -28,26 +38,6 @@ jobs:
         with:
           name: single_file
           path: ./myartifact.txt
-      - name: upload from directory
-        uses: actions/upload-artifact@v7.0.2
-        with: 
-          name: directory_artifacts
-          path: artifacts/
-      - name: upload from multiple path
-        uses: actions/upload-artifact@v7.0.2
-        with:
-          name: multiple_paths
-          path: |
-            ./myartifact.txt
-            artifacts/
-      - name: upload from multiple path with exclusion
-        uses: actions/upload-artifact@v7.0.2
-        with:
-          name: multiple_paths_with_exclusion
-          path: |
-            ./myartifact.txt
-            artifacts/
-            !**/hostname.txt
   job2:
     name: JOB2
     needs: job1
@@ -61,54 +51,32 @@ jobs:
         uses: actions/download-artifact@v8.0.2
         with :
           name: single_file
-      - name: checking the current directory post download
-        run: | 
-          pwd
-          ls -ltr
+      - name: Referring Envoirnment Variable
+        run: |
+          echo "[INFO] Running deployment for $ENV_TYPE with user $APP_USER."
+          echo "[INFO] Once application is accesible on port $APP_PORT."
+          
+      - name: Reffering Repository secret
+        run: |
+          echo "[INFO] Application password is ${{ secrets.APP_PASSWORD }} "
+
   job3:
     name: JOB3
-    needs: job1
     runs-on: ubuntu-latest
     steps:  
-      - name: checking the current directory
+      - name: Referring context or inbuilt variable
         run: |
-         pwd
-         ls -ltr
-      - name: Download single file artifact
-        uses: actions/download-artifact@v8.0.2
-        with :
-          name: directory_artifacts
-      - name: checking the current directory post download
-        run: | 
-          pwd
-          ls -ltr
-  job4:
-    name: JOB4
-    needs: job1
-    runs-on: ubuntu-latest
-    steps:  
-      - name: creating custom folder for download
-        run: |
-         mkdir -p single_file
-         mkdir -p download_directory
-      - name: downloding single file artifact
-        uses: actions/download-artifact@v8.0.2
-        with:
-          name: single_file
-          path: single_file
-      - name: Download directory
-        uses: actions/download-artifact@v8.0.2
-        with :
-          name: directory_artifacts
-          path: download_directory
-      - name: checking the current directory post download
-        run: | 
-          pwd
-          ls -ltr
-          echo "Checking sigle file directory"
-          ls -ltr single_file
-          echo "Checking directory artifact"
-          ls -ltr download_directory
+          echo "[INFO] Trigger by ${{ github.event_name }}"
+          echo "[INFO] New changes added by ${{ github.actor }} in ${{ github.ref_name }} branch."
+          echo "[INFO] Current Step in ${{ runner.os }}"
+          echo "[INFO] Current Job id is ${{ job.check_run_id }}"
           
-            
+          
+          
+          
+        
+          
+          
+        
+        
   
